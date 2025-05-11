@@ -36,13 +36,6 @@ access_log
 # Configuration files with sensitive data
 config.php
 
-# Uploaded files
-uploads/
-images/*.jpg
-images/*.jpeg
-images/*.png
-images/*.gif
-!images/placeholder.jpg
 
 # Backup files
 *.bak
