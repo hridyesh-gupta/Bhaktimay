@@ -1,13 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize variables
-    const mainItemPrice = parseInt(document.getElementById('main-item-price').textContent);
+    const mainItem = window.MAIN_ITEM;
+    const addons = window.ADDONS;
     const totalAmountElement = document.getElementById('total-amount');
     const customAmountInput = document.getElementById('custom-amount');
     const checkoutBtn = document.getElementById('checkout-btn');
     
     // Function to update total amount
     function updateTotalAmount() {
-        let total = mainItemPrice;
+        let total = mainItem.price;
         
         // Add add-ons prices
         document.querySelectorAll('.quantity').forEach(input => {
@@ -59,20 +59,27 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         
+        // Collect selected add-ons
+        const selectedAddons = Array.from(document.querySelectorAll('.quantity')).map(input => ({
+            id: input.dataset.id,
+            name: input.dataset.name,
+            price: parseInt(input.dataset.price),
+            quantity: parseInt(input.value) || 0
+        })).filter(addon => addon.quantity > 0);
+        
         // Collect form data
         const formData = {
+            main_item_name: mainItem.name,
+            main_item_price: mainItem.price,
+            addons: selectedAddons,
+            custom_amount: parseInt(customAmountInput.value) || 0,
+            total_amount: parseInt(totalAmountElement.textContent),
             name: document.getElementById('name').value,
             gotra: document.getElementById('gotra').value,
             mobile: document.getElementById('mobile').value,
             address1: document.getElementById('address1').value,
             address2: document.getElementById('address2').value,
-            pincode: document.getElementById('pincode').value,
-            total_amount: parseInt(totalAmountElement.textContent),
-            addons: Array.from(document.querySelectorAll('.quantity')).map(input => ({
-                id: input.dataset.id,
-                quantity: parseInt(input.value) || 0
-            })),
-            custom_amount: parseInt(customAmountInput.value) || 0
+            pincode: document.getElementById('pincode').value
         };
         
         // Create Razorpay order
@@ -116,7 +123,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         contact: formData.mobile
                     },
                     theme: {
-                        color: "#28a745"
+                        color: "#FF6F00"
                     },
                     modal: {
                         ondismiss: function() {
@@ -130,6 +137,10 @@ document.addEventListener('DOMContentLoaded', function() {
             } else {
                 alert('Error creating order: ' + data.message);
             }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred while processing your payment. Please try again.');
         });
     });
     

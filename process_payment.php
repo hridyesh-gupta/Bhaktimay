@@ -41,33 +41,24 @@ try {
     
     try {
         // Store order details in database
-        $stmt = $conn->prepare("INSERT INTO orders (order_id, name, gotra, mobile, address1, address2, pincode, total_amount, custom_amount, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())");
-        $stmt->bind_param("sssssssdi", 
+        $stmt = $conn->prepare("INSERT INTO orders (order_id, main_item_name, main_item_price, addons_json, custom_amount, total_amount, name, gotra, mobile, address1, address2, pincode, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())");
+        $addons_json = json_encode($data['addons']);
+        $stmt->bind_param(
+            "ssdssdssssss",
             $orderArray['id'],
+            $data['main_item_name'],
+            $data['main_item_price'],
+            $addons_json,
+            $data['custom_amount'],
+            $data['total_amount'],
             $data['name'],
             $data['gotra'],
             $data['mobile'],
             $data['address1'],
             $data['address2'],
-            $data['pincode'],
-            $data['total_amount'],
-            $data['custom_amount']
+            $data['pincode']
         );
         $stmt->execute();
-        $orderId = $conn->insert_id;
-        
-        // Store add-ons
-        if (!empty($data['addons'])) {
-            $stmt = $conn->prepare("INSERT INTO order_addons (order_id, addon_id, quantity) VALUES (?, ?, ?)");
-            foreach ($data['addons'] as $addon) {
-                if ($addon['quantity'] > 0) {
-                    $stmt->bind_param("iii", $orderId, $addon['id'], $addon['quantity']);
-                    $stmt->execute();
-                }
-            }
-        }
-        
-        // Commit transaction
         $conn->commit();
         
         // Return success response
