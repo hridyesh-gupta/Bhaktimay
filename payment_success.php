@@ -67,14 +67,9 @@ try {
                       }
                     </script>
                 </head>
-                <body class='bg-lightyellow min-h-screen'>
-                    <!-- Header with centered logo -->
-                    <header class='w-full bg-lightyellow py-4 shadow-sm mb-8'>
-                      <div class='flex justify-center items-center'>
-                        <img src='images/logo.png' alt='Bhaktimay Logo' class='h-20 md:h-28 object-contain' />
-                      </div>
-                    </header>
-                    <div class='container mx-auto px-4 py-8 max-w-2xl'>
+                <body class='bg-lightyellow min-h-screen'>";
+                include 'header.php';
+                echo "<div class='container mx-auto px-4 py-8 max-w-2xl'>
                         <div class='bg-green-50 border-l-4 border-green-500 p-6 rounded-lg shadow-md mb-8'>
                             <div class='flex items-center'>
                                 <div class='flex-shrink-0'>
