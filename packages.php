@@ -1082,7 +1082,7 @@
     <div class="faq-section">
       <div class="section-title">
         <img src="https://ext.same-assets.com/1765579610/2806274772.svg" class="pattern-heading">
-        Frequently Asked Questions
+        FAQs
         <img src="https://ext.same-assets.com/1765579610/2806274772.svg" class="pattern-heading" style="transform: rotate(180deg);">
       </div>
       <div class="faq-item">
@@ -1106,10 +1106,12 @@
     
     <!-- WhatsApp Subscribe Section -->
     <div class="whatsapp-section">
-      <div class="section-title">
-        <img src="https://ext.same-assets.com/1765579610/2806274772.svg" class="pattern-heading">
-        Subscribe to Bhaktimay WhatsApp
-        <img src="https://ext.same-assets.com/1765579610/2806274772.svg" class="pattern-heading" style="transform: rotate(180deg);">
+      <img src="images/clogo.png" alt="Bhaktimay Logo" style="height:100px; margin: 8px 0px 8px;">
+      <div class="section-title" style="margin: 12px 0px 12px;">
+        <img src="https://ext.same-assets.com/1765579610/2806274772.svg" class="pattern-heading" style="position: relative; left: 0%;">
+        Subscribe
+        <img src="https://ext.same-assets.com/1765579610/2806274772.svg" class="pattern-heading" style="transform: rotate(180deg); position: relative; right: 0%;">
+        <br>to Bhaktimay WhatsApp
       </div>
       <br>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
@@ -1120,9 +1122,9 @@
   <footer>
     <div class="footer-container">
       <div class="footer-about">
-        <img src="images/logo.png" alt="Bhaktimay Logo" style="height:36px; margin-bottom:8px;">
+        <img src="images/clogo.png" alt="Bhaktimay Logo" style="height:70px; margin-bottom:8px;">
         <p style="font-size:14px;color:#fff;line-height:1.7;">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.<br>Made with <span style="color:#e4a895">❤️</span> in Bharat
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.<br>Made with <span style="color:#e4a895">❤️</span> in Hindustan
         </p>
       </div>
       <div class="footer-social">
