@@ -155,7 +155,7 @@ $addons = [
                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
                 </div>
                 <div class="form-group col-span-full">
-                    <input type="text" id="gotra" name="gotra" placeholder="Gotra" required
+                    <input type="text" id="gotra" name="gotra" placeholder="Gotra" 
                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
                 </div>
                 <div class="form-group col-span-full">
@@ -172,7 +172,7 @@ $addons = [
                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
                 </div>
                 <div class="form-group col-span-full">
-                    <input type="text" id="pincode" name="pincode" placeholder="PIN Code" required
+                    <input type="text" id="pincode" name="pincode" placeholder="PIN Code" 
                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
                 </div>
             </div>
