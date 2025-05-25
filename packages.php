@@ -1,31 +1,33 @@
 <?php
   require_once 'config.php';
 
+  $longname = "Long Pooja Name";
+  $shortname = "Short Pooja Name";
   // Define packages
   $packages = [
       'individual' => [
-          'name' => 'Individual Package',
+          'name' => 'Individual',
           'price' => 1000,
           'description' => 'Perfect for single person',
           'image' => 'addon1.jpg',
           'features' => ['1 Person', 'Basic Pooja Items', 'Standard Prasad']
       ],
       'couple' => [
-          'name' => 'Couple Package',
+          'name' => 'Couple',
           'price' => 2000,
           'description' => 'Ideal for couples',
           'image' => 'addon2.jpg',
           'features' => ['2 Persons', 'Premium Pooja Items', 'Special Prasad']
       ],
       'family' => [
-          'name' => 'Family Package',
+          'name' => 'Family',
           'price' => 3500,
           'description' => 'Best for small families',
           'image' => 'addon3.jpg',
           'features' => ['4 Persons', 'Deluxe Pooja Items', 'Family Prasad']
       ],
       'joint_family' => [
-          'name' => 'Joint Family Package',
+          'name' => 'Joint Family',
           'price' => 5000,
           'description' => 'Perfect for large families',
           'image' => 'addon4.jpg',
@@ -38,10 +40,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Surya Dev Abhishek for Good Health, Aditya Hridya Stotram Yagya and Rudrabhishek - Bhaktimay</title>
+  <title><?php echo $shortname; ?> - Bhaktimay</title>
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
@@ -57,7 +59,7 @@
     }
     body {
       background: #FFF9DB;
-      font-family: 'Nunito', Arial, sans-serif;
+      font-family: 'Poppins', Arial, sans-serif;
       color: #34394b;
       padding-top: 64px;
     }
@@ -125,7 +127,32 @@
       display: flex;
       align-items: center;
     }
-    .hero-badges { display: flex; gap: 8px; margin-bottom: 10px; }
+    .hero-badges { 
+      display: flex; 
+      margin-bottom: 10px;
+      position: relative;
+      height: 28px;
+    }
+    .hero-badges .image {
+      position: relative;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 2px solid #fff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-left: -10px;
+      z-index: 1;
+    }
+    .hero-badges .image:first-child {
+      margin-left: 0;
+      z-index: 3;
+    }
+    .hero-badges .image:nth-child(2) {
+      z-index: 2;
+    }
+    .hero-badges .image:last-child {
+      z-index: 1;
+    }
     .hero-stat { color: #9a9ba5; font-size: 13px; }
     .countdown-timer {
       display: flex;
@@ -365,10 +392,25 @@
       border-radius: 8px;
       padding: 18px;
     }
-    .testimonial-card h4 {
-      color: #FF6F00;
-      margin-top: 0;
-      font-size: 17px;
+    .testimonial-dots {
+      display: none;
+      justify-content: center;
+      gap: 8px;
+      margin: 20px 0;
+      width: 100%;
+    }
+    .testimonial-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #e4a895;
+      opacity: 0.5;
+      cursor: pointer;
+      transition: opacity 0.3s ease;
+    }
+    .testimonial-dot.active {
+      opacity: 1;
+      background: #FF0000;
     }
     .rating {
       display: flex;
@@ -536,6 +578,16 @@
       margin: 0;
     }
 
+    .whatsapp-float {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 999;
+      display: inline-block;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0);
+    }
+
     @media (max-width: 900px) {
       .container { 
         padding: 12px 8px; 
@@ -593,13 +645,32 @@
         overflow-x: auto;
         scroll-snap-type: x mandatory;
         scroll-behavior: smooth;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
       }
-
+      .testimonials::-webkit-scrollbar {
+        display: none;
+      }
       .testimonial-card {
         flex: 0 0 100%;
         scroll-snap-align: start;
         margin-right: 16px;
         box-sizing: border-box;
+      }
+      .testimonial-dots {
+        display: flex;
+      }
+      .hero-badges {
+        height: 28px;
+        margin-left: 0;
+      }
+      .hero-badges .image {
+        width: 28px;
+        height: 28px;
+        margin-left: -10px;
+      }
+      .hero-badges .image:first-child {
+        margin-left: 0;
       }
     }
 
@@ -649,9 +720,9 @@
         height: 36px;
         margin-bottom: 2px;
       }
-      .tab-price {
+      .tab-name {
         font-size: 15px;
-        font-weight: 700;
+        font-weight: 500;
         color: #FF6F00;
       }
       .package-details {
@@ -818,7 +889,7 @@
     <section class="hero">
       <img class="hero-img" src="images/addon1.jpg"/>
       <div class="hero-content">
-        <div class="hero-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit</div>
+        <div class="hero-title"><?php echo $longname; ?></div>
         <div class="hero-meta"><img src="https://cdn-icons-png.flaticon.com/512/684/684908.png" alt="Location" style="height: 20px; vertical-align:middle;margin-right:5px;">Lorem ipsum dolor sit amet</div>
         <div class="hero-date"><img src="https://cdn-icons-png.flaticon.com/512/747/747310.png" alt="Calendar" style="height: 20px; vertical-align:middle;margin-right:5px;">Thursday, 15 May 2025</div>
         
@@ -848,9 +919,9 @@
 
         
         <div class="hero-badges">
-          <img src="https://ext.same-assets.com/1765579610/3526585712.jpeg" alt="User" style="width:28px; border-radius:50%;">
-          <img src="https://ext.same-assets.com/1765579610/529674041.jpeg" alt="User" style="width:28px; border-radius:50%;">
-          <img src="https://ext.same-assets.com/1765579610/1634109515.jpeg" alt="User" style="width:28px; border-radius:50%;">
+          <img src="https://ext.same-assets.com/1765579610/3526585712.jpeg" alt="User" class="image">
+          <img src="https://ext.same-assets.com/1765579610/529674041.jpeg" alt="User" class="image">
+          <img src="https://ext.same-assets.com/1765579610/1634109515.jpeg" alt="User" class="image">
         </div>
         <div class="hero-stat">Lorem ipsum dolor sit amet, consectetur adipiscing elit</div>
         <button class="hero-cta" onclick="document.getElementById('participation').scrollIntoView({ behavior: 'smooth' })">Participate in Puja</button>
@@ -896,7 +967,7 @@
     <div class="cards-container">
       <?php foreach ($packages as $key => $package): ?>
       <div class="package-card">
-        <div class="pkg-title"><?php echo $package['name']; ?></div>
+        <div class="pkg-title"><?php echo $package['name']; ?> <?php echo $shortname; ?></div>
         <div class="pkg-price">₹<?php echo number_format($package['price']); ?></div>
         <img src="images/<?php echo $package['image']; ?>" class="pkg-img" alt="<?php echo $package['name']; ?>"/>
         <ul>
@@ -907,7 +978,7 @@
           </li>
           <?php endforeach; ?>
         </ul>
-        <a href="cart.php?package=<?php echo $key; ?>" class="pkg-cta">Book Now</a>
+        <a href="cart.php?package=<?php echo $key; ?>" class="pkg-cta">Participate</a>
       </div>
       <?php endforeach; ?>
     </div>
@@ -916,14 +987,14 @@
         <?php foreach ($packages as $key => $package): ?>
         <div class="package-tab" data-package="<?php echo $key; ?>">
           <img src="images/<?php echo $package['image']; ?>" />
-          <div class="tab-price">₹<?php echo number_format($package['price']); ?></div>
+          <div class="tab-name"><?php echo $package['name']; ?></div>
         </div>
         <?php endforeach; ?>
       </div>
       <div class="package-details">
         <?php foreach ($packages as $key => $package): ?>
         <div class="package-card mobile-card" data-package="<?php echo $key; ?>" <?php echo $key === 'individual' ? '' : 'style="display:none;"'; ?>>
-          <div class="pkg-title"><?php echo $package['name']; ?></div>
+          <div class="pkg-title"><?php echo $package['name'];?> <?php echo $shortname; ?></div>
           <div class="pkg-price">₹<?php echo number_format($package['price']); ?></div>
           <img src="images/<?php echo $package['image']; ?>" class="pkg-img" alt="<?php echo $package['name']; ?>"/>
           <ul>
@@ -934,7 +1005,7 @@
             </li>
             <?php endforeach; ?>
           </ul>
-          <button class="pkg-cta" onclick="window.location.href='cart.php?package=<?php echo $key; ?>'">Book Now</button>
+          <button class="pkg-cta" onclick="window.location.href='cart.php?package=<?php echo $key; ?>'">Participate</button>
         </div>
         <?php endforeach; ?>
       </div>
@@ -993,7 +1064,7 @@
         <div class="card-header" onclick="toggleCard(this)">
           <img src="images/swastik.png" class="logo" style="height: 50px;">
           <h4>Lorem ipsum dolor sit</h4>
-          <span class="icon">▼</span>
+          <span class="icon">⌵</span>
         </div>
         <div class="card-content">
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
@@ -1003,7 +1074,7 @@
         <div class="card-header" onclick="toggleCard(this)">
           <img src="images/swastik.png" class="logo" style="height: 50px;">
           <h4>Lorem ipsum dolor sit</h4>
-          <span class="icon">▼</span>
+          <span class="icon">⌵</span>
         </div>
         <div class="card-content">
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
@@ -1012,7 +1083,7 @@
         <div class="card-header" onclick="toggleCard(this)">
           <img src="images/swastik.png" class="logo" style="height: 50px;">
           <h4>Lorem ipsum dolor sit</h4>
-          <span class="icon">▼</span>
+          <span class="icon">⌵</span>
         </div>
         <div class="card-content">
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
@@ -1021,7 +1092,7 @@
         <div class="card-header" onclick="toggleCard(this)">
           <img src="images/swastik.png" class="logo" style="height: 50px;">
           <h4>Lorem ipsum dolor sit</h4>
-          <span class="icon">▼</span>
+          <span class="icon">⌵</span>
         </div>
         <div class="card-content">
           <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
@@ -1076,6 +1147,11 @@
           <div class="reviewer-meta">Name Surname • Via Facebook</div>
         </div>
       </div>
+      <div class="testimonial-dots">
+        <div class="testimonial-dot active"></div>
+        <div class="testimonial-dot"></div>
+        <div class="testimonial-dot"></div>
+      </div>
     </div>
     
     <!-- FAQ Section -->
@@ -1118,6 +1194,14 @@
       <br>
       <a href="https://wa.me/919580199989" target="_blank" class="whatsapp-btn">Subscribe on WhatsApp</a>
     </div>
+
+    <a href="https://wa.me/919580199989?text=Namaste,%20I%20have%20a%20query%20regarding%20the%20<?php echo urlencode($shortname); ?>" target="_blank" class="whatsapp-float" aria-label="Chat on WhatsApp">
+      <img
+      src="https://img.icons8.com/color/48/000000/whatsapp--v1.png"
+      alt="WhatsApp"
+      style="width: 56px; height: 56px;"/>
+    </a>
+
   
   <footer>
     <div class="footer-container">
@@ -1146,7 +1230,7 @@
   
   <script>
     // Set your countdown deadline here (yyyy-mm-dd hh:mm:ss format)
-    const deadline = new Date("2025-05-20T19:21:44").getTime();
+    const deadline = new Date("2025-05-25T19:21:44").getTime();
 
     function updateCountdown() {
       const now = new Date().getTime();
@@ -1220,28 +1304,52 @@
     }
 
     const carousel = document.querySelector('.testimonials');
+    const dots = document.querySelectorAll('.testimonial-dot');
     let scrollAmount = 0;
     let slideWidth = carousel.offsetWidth;
+    let currentSlide = 0;
+
+    function updateDots() {
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentSlide);
+      });
+    }
+
+    function goToSlide(index) {
+      currentSlide = index;
+      scrollAmount = slideWidth * index;
+      carousel.scrollTo({
+        left: scrollAmount,
+        behavior: 'smooth'
+      });
+      updateDots();
+    }
+
+    // Add click event listeners to dots
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        goToSlide(index);
+      });
+    });
 
     function autoScroll() {
       if (window.innerWidth <= 768) {
-        scrollAmount += slideWidth;
-        if (scrollAmount >= carousel.scrollWidth) {
-          scrollAmount = 0;
-        }
-        carousel.scrollTo({
-          left: scrollAmount,
-          behavior: 'smooth'
-        });
+        currentSlide = (currentSlide + 1) % dots.length;
+        goToSlide(currentSlide);
       }
     }
 
-    let interval = setInterval(autoScroll, 3000); // change slide every 3s
+    let interval = setInterval(autoScroll, 3000);
 
     // Optional: Pause on hover
     carousel.addEventListener('mouseenter', () => clearInterval(interval));
     carousel.addEventListener('mouseleave', () => {
       interval = setInterval(autoScroll, 3000);
+    });
+
+    // Update slide width on window resize
+    window.addEventListener('resize', () => {
+      slideWidth = carousel.offsetWidth;
     });
   </script>
 </body>

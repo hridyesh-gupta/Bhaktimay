@@ -1,31 +1,33 @@
 <?php
 require_once 'config.php';
 
+$longname = "Long Pooja Name";
+$shortname = "Short Pooja Name";
 // Define packages (same as in packages.php)
 $packages = [
     'individual' => [
-        'name' => 'Individual Package',
+        'name' => 'Individual',
         'price' => 1000,
         'description' => 'Perfect for single person',
         'image' => 'addon1.jpg',
         'features' => ['1 Person', 'Basic Pooja Items', 'Standard Prasad']
     ],
     'couple' => [
-        'name' => 'Couple Package',
+        'name' => 'Couple',
         'price' => 2000,
         'description' => 'Ideal for couples',
         'image' => 'addon2.jpg',
         'features' => ['2 Persons', 'Premium Pooja Items', 'Special Prasad']
     ],
     'family' => [
-        'name' => 'Family Package',
+        'name' => 'Family',
         'price' => 3500,
         'description' => 'Best for small families',
         'image' => 'addon3.jpg',
         'features' => ['4 Persons', 'Deluxe Pooja Items', 'Family Prasad']
     ],
     'joint_family' => [
-        'name' => 'Joint Family Package',
+        'name' => 'Joint Family',
         'price' => 5000,
         'description' => 'Perfect for large families',
         'image' => 'addon4.jpg',
@@ -63,6 +65,8 @@ $addons = [
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cart - Bhaktimay</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script>
       tailwind.config = {
         theme: {
@@ -70,6 +74,9 @@ $addons = [
             colors: {
               primary: '#FF6F00', // Reddish/orange
               lightyellow: '#FFF9DB', // Light yellowish
+            },
+            fontFamily: {
+              sans: ['Poppins', 'Arial', 'sans-serif'],
             }
           }
         }
@@ -87,8 +94,12 @@ $addons = [
         <div class="bg-white rounded-lg shadow-md p-6 mb-8">
             <div class="flex flex-col items-start">
                 <img src="images/<?php echo $main_item['image']; ?>" alt="Main Item" class="w-full h-auto object-contain rounded-lg mb-4" style="height: 100px">
+                <h1 class="text-3xl font-semibold text-gray-700">
+                    <?php echo htmlspecialchars($longname); ?>
+                </h1>
+                <br>
                 <h2 class="text-xl font-semibold text-gray-700">
-                    <?php echo htmlspecialchars($main_item['name']); ?> (₹<span id="main-item-price"><?php echo $main_item['price']; ?></span>)
+                    <?php echo htmlspecialchars($main_item['name']); ?> <?php echo htmlspecialchars($shortname); ?> (₹<span id="main-item-price"><?php echo $main_item['price']; ?></span>)
                 </h2>
                 <p class="text-gray-600 mt-2"><?php echo $packages[$selected_package]['description']; ?></p>
                 <div class="mt-4">
@@ -152,11 +163,12 @@ $addons = [
                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
                 </div>
                 <div class="form-group col-span-full">
-                    <input type="text" id="address1" name="address1" placeholder="Address Line 1 (Compulsory if you've ordered prasad)" 
+                    <input type="text" id="address1" name="address1" placeholder="Address Line 1" 
                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                           <span style="color: grey;">(Compulsory if you've ordered prasad)</span>
                 </div>
                 <div class="form-group col-span-full">
-                    <input type="text" id="address2" name="address2" placeholder="Address Line 2 (Compulsory if you've ordered prasad)" 
+                    <input type="text" id="address2" name="address2" placeholder="Address Line 2" 
                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
                 </div>
                 <div class="form-group col-span-full">
@@ -179,10 +191,12 @@ $addons = [
 
     <script>
         // Expose main item and add-ons to JS
+        window.POOJA = <?php echo json_encode($shortname); ?>;
         window.MAIN_ITEM = <?php echo json_encode($main_item); ?>;
         window.ADDONS = <?php echo json_encode($addons); ?>;
         
         document.addEventListener('DOMContentLoaded', function() {
+            const poojaName = window.POOJA;
             const mainItem = window.MAIN_ITEM;
             const addons = window.ADDONS;
             const totalAmountElement = document.getElementById('total-amount');
@@ -253,6 +267,7 @@ $addons = [
                 
                 // Collect form data
                 const formData = {
+                    pooja_name: poojaName,
                     main_item_name: mainItem.name,
                     main_item_price: mainItem.price,
                     addons: selectedAddons,
