@@ -1230,7 +1230,8 @@
   
   <script>
     // Set your countdown deadline here (yyyy-mm-dd hh:mm:ss format)
-    const deadline = new Date("2025-05-25T19:21:44").getTime();
+    // Don't let this timer count for past dates as it will make all the JS logics fail and nothing will work 
+    const deadline = new Date("2025-05-29T19:21:44").getTime();
 
     function updateCountdown() {
       const now = new Date().getTime();

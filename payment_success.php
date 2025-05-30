@@ -49,6 +49,7 @@ try {
                 
                 // Payment successful - Show detailed success page
                 $addons = json_decode($order['addons_json'], true) ?: [];
+                $names_gotras = json_decode($order['names_gotras_json'], true) ?: [];
                 echo "<!DOCTYPE html>
                 <html>
                 <head>
@@ -122,14 +123,21 @@ try {
                                     <div class='text-sm sm:text-base text-gray-600 font-medium'>Amount Paid:</div>
                                     <div class='text-sm sm:text-base text-gray-800'>₹" . number_format($order['total_amount'], 2) . "</div>
                                     
-                                    <div class='text-sm sm:text-base text-gray-600 font-medium'>Name:</div>
-                                    <div class='text-sm sm:text-base text-gray-800'>" . htmlspecialchars($order['name']) . "</div>
-                                    
-                                    <div class='text-sm sm:text-base text-gray-600 font-medium'>Gotra:</div>
-                                    <div class='text-sm sm:text-base text-gray-800'>" . htmlspecialchars($order['gotra']) . "</div>
-                                    
                                     <div class='text-sm sm:text-base text-gray-600 font-medium'>Mobile:</div>
                                     <div class='text-sm sm:text-base text-gray-800'>" . htmlspecialchars($order['mobile']) . "</div>
+                                </div>
+                                
+                                <div class='border-t border-gray-200 pt-3 sm:pt-4'>
+                                    <div class='text-sm sm:text-base text-gray-600 font-medium mb-2'>Names and Gotras:</div>
+                                    <div class='space-y-2'>";
+                                    foreach ($names_gotras as $index => $person) {
+                                        echo "<div class='text-sm sm:text-base text-gray-800'>
+                                            <span class='font-medium'>Person " . ($index + 1) . ":</span><br>
+                                            Name: " . htmlspecialchars($person['name']) . "<br>
+                                            Gotra: " . htmlspecialchars($person['gotra']) . "
+                                        </div>";
+                                    }
+                                    echo "</div>
                                 </div>
                                 
                                 <div class='border-t border-gray-200 pt-3 sm:pt-4'>

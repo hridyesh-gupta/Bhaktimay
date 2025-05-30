@@ -150,14 +150,12 @@ $addons = [
         <form id="checkout-form" class="bg-white rounded-lg shadow-md p-6 mb-8">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <h3 class="text-xl font-semibold text-primary mb-4 col-span-full">Your Details</h3>
-                <div class="form-group col-span-full">
-                    <input type="text" id="name" name="name" placeholder="Full Name" required
-                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                
+                <!-- Dynamic Name and Gotra Fields -->
+                <div id="names-gotras-container" class="col-span-full space-y-4">
+                    <!-- Fields will be dynamically added here -->
                 </div>
-                <div class="form-group col-span-full">
-                    <input type="text" id="gotra" name="gotra" placeholder="Gotra" 
-                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
-                </div>
+
                 <div class="form-group col-span-full">
                     <input type="tel" id="mobile" name="mobile" placeholder="Mobile Number" required
                            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
@@ -194,14 +192,65 @@ $addons = [
         window.POOJA = <?php echo json_encode($shortname); ?>;
         window.MAIN_ITEM = <?php echo json_encode($main_item); ?>;
         window.ADDONS = <?php echo json_encode($addons); ?>;
+        window.SELECTED_PACKAGE = <?php echo json_encode($selected_package); ?>;
         
         document.addEventListener('DOMContentLoaded', function() {
             const poojaName = window.POOJA;
             const mainItem = window.MAIN_ITEM;
             const addons = window.ADDONS;
+            const selectedPackage = window.SELECTED_PACKAGE;
             const totalAmountElement = document.getElementById('total-amount');
             const customAmountInput = document.getElementById('custom-amount');
             const checkoutBtn = document.getElementById('checkout-btn');
+            const namesGotrasContainer = document.getElementById('names-gotras-container');
+            
+            // Function to create name and gotra fields
+            function createNameGotraFields() {
+                namesGotrasContainer.innerHTML = ''; // Clear existing fields
+                
+                // Determine number of fields based on package
+                let numFields = 1; // Default for individual
+                switch(selectedPackage) {
+                    case 'couple':
+                        numFields = 2;
+                        break;
+                    case 'family':
+                        numFields = 4;
+                        break;
+                    case 'joint_family':
+                        numFields = 6;
+                        break;
+                }
+                
+                // Create fields
+                for(let i = 0; i < numFields; i++) {
+                    const fieldGroup = document.createElement('div');
+                    fieldGroup.className = 'grid grid-cols-1 md:grid-cols-2 gap-4';
+                    
+                    const nameField = document.createElement('div');
+                    nameField.className = 'form-group';
+                    nameField.innerHTML = `
+                        <input type="text" id="name_${i}" name="name_${i}" 
+                               placeholder="Full Name ${i + 1}" required
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                    `;
+                    
+                    const gotraField = document.createElement('div');
+                    gotraField.className = 'form-group';
+                    gotraField.innerHTML = `
+                        <input type="text" id="gotra_${i}" name="gotra_${i}" 
+                               placeholder="Gotra ${i + 1}"
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary">
+                    `;
+                    
+                    fieldGroup.appendChild(nameField);
+                    fieldGroup.appendChild(gotraField);
+                    namesGotrasContainer.appendChild(fieldGroup);
+                }
+            }
+            
+            // Initialize name and gotra fields
+            createNameGotraFields();
             
             // Function to update total amount
             function updateTotalAmount() {
@@ -265,6 +314,19 @@ $addons = [
                     quantity: parseInt(input.value) || 0
                 })).filter(addon => addon.quantity > 0);
                 
+                // Collect names and gotras
+                const namesGotras = [];
+                const numFields = selectedPackage === 'individual' ? 1 : 
+                                selectedPackage === 'couple' ? 2 :
+                                selectedPackage === 'family' ? 4 : 6;
+                
+                for(let i = 0; i < numFields; i++) {
+                    namesGotras.push({
+                        name: document.getElementById(`name_${i}`).value,
+                        gotra: document.getElementById(`gotra_${i}`).value
+                    });
+                }
+                
                 // Collect form data
                 const formData = {
                     pooja_name: poojaName,
@@ -273,8 +335,7 @@ $addons = [
                     addons: selectedAddons,
                     custom_amount: parseInt(customAmountInput.value) || 0,
                     total_amount: parseInt(totalAmountElement.textContent),
-                    name: document.getElementById('name').value,
-                    gotra: document.getElementById('gotra').value,
+                    names_gotras: namesGotras,
                     mobile: document.getElementById('mobile').value,
                     address1: document.getElementById('address1').value,
                     address2: document.getElementById('address2').value,
@@ -318,7 +379,7 @@ $addons = [
                                 window.location.href = 'payment_success.php?payment_id=' + response.razorpay_payment_id;
                             },
                             prefill: {
-                                name: formData.name,
+                                name: formData.names_gotras[0].name,
                                 contact: formData.mobile
                             },
                             theme: {

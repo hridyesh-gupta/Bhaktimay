@@ -12,8 +12,7 @@ CREATE TABLE IF NOT EXISTS orders (
     addons_json TEXT, -- JSON string of selected add-ons and their quantities
     custom_amount DECIMAL(10,2) NOT NULL DEFAULT 0,
     total_amount DECIMAL(10,2) NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    gotra VARCHAR(100) NOT NULL,
+    names_gotras_json TEXT,
     mobile VARCHAR(20) NOT NULL,
     address1 VARCHAR(255) NOT NULL,
     address2 VARCHAR(255) NOT NULL,
