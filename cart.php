@@ -3,6 +3,8 @@ require_once 'config.php';
 
 $longname = "Long Pooja Name";
 $shortname = "Short Pooja Name";
+$eventid = "Event ID";
+$eventdate = "Event Date";
 // Define packages (same as in packages.php)
 $packages = [
     'individual' => [
@@ -189,12 +191,16 @@ $addons = [
 
     <script>
         // Expose main item and add-ons to JS
+        window.EVENTID = <?php echo json_encode($eventid); ?>;
+        window.EVENTDATE = <?php echo json_encode($eventdate); ?>;
         window.POOJA = <?php echo json_encode($shortname); ?>;
         window.MAIN_ITEM = <?php echo json_encode($main_item); ?>;
         window.ADDONS = <?php echo json_encode($addons); ?>;
         window.SELECTED_PACKAGE = <?php echo json_encode($selected_package); ?>;
         
         document.addEventListener('DOMContentLoaded', function() {
+            const eventId = window.EVENTID;
+            const eventDate = window.EVENTDATE;
             const poojaName = window.POOJA;
             const mainItem = window.MAIN_ITEM;
             const addons = window.ADDONS;
@@ -329,6 +335,8 @@ $addons = [
                 
                 // Collect form data
                 const formData = {
+                    event_id: eventId,
+                    event_date: eventDate,
                     pooja_name: poojaName,
                     main_item_name: mainItem.name,
                     main_item_price: mainItem.price,

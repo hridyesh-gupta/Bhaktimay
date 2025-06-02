@@ -7,6 +7,9 @@ CREATE TABLE IF NOT EXISTS orders (
     id INT AUTO_INCREMENT PRIMARY KEY,
     order_id VARCHAR(255) NOT NULL,
     payment_id VARCHAR(255),
+    event_id VARCHAR(255) NOT NULL,
+    event_date VARCHAR(255) NOT NULL,
+    pooja_name VARCHAR(255) NOT NULL,
     main_item_name VARCHAR(255) NOT NULL,
     main_item_price DECIMAL(10,2) NOT NULL,
     addons_json TEXT, -- JSON string of selected add-ons and their quantities

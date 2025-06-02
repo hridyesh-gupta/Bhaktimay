@@ -41,12 +41,14 @@ try {
     
     try {
         // Store order details in database
-        $stmt = $conn->prepare("INSERT INTO orders (order_id, pooja_name, main_item_name, main_item_price, addons_json, custom_amount, total_amount, names_gotras_json, mobile, address1, address2, pincode, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())");
+        $stmt = $conn->prepare("INSERT INTO orders (order_id, event_id, event_date, pooja_name, main_item_name, main_item_price, addons_json, custom_amount, total_amount, names_gotras_json, mobile, address1, address2, pincode, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())");
         $addons_json = json_encode($data['addons']);
         $names_gotras_json = json_encode($data['names_gotras']);
         $stmt->bind_param(
-            "sssdsdssssss",
+            "sssssdsdssssss",
             $orderArray['id'],
+            $data['event_id'],
+            $data['event_date'],
             $data['pooja_name'],
             $data['main_item_name'],
             $data['main_item_price'],
