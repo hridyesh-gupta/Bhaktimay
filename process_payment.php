@@ -23,12 +23,36 @@ try {
     // Initialize Razorpay API
     $api = new Api(RAZORPAY_KEY_ID, RAZORPAY_KEY_SECRET);
     
+   $slug = strtolower($data['pooja_name']);                          
+    $slug = preg_replace('/[^a-z0-9\s]/', '', $slug);                   
+    $slug = preg_replace('/\s+/', '-', $slug);                          
+    $slug = trim($slug, '-');                                           
+    $pooja_link = $slug . '.php';     
+    
+    
+     $names_gotras_json = json_encode($data['names_gotras']);
+    $namesGotrasArray = json_decode($names_gotras_json, true);
+
+    // Extract first name and gotra
+    $firstName = isset($namesGotrasArray[0]['name']) ? $namesGotrasArray[0]['name'] : 'N/A';
+    $firstGotra = isset($namesGotrasArray[0]['gotra']) ? $namesGotrasArray[0]['gotra'] : 'N/A';
+    
+    
+    
+    
     // Create order
     $orderData = [
         'receipt'         => 'rcpt_' . time(),
         'amount'          => $data['total_amount'] * 100, // Convert to paise
         'currency'        => 'INR',
-        'payment_capture' => 1
+        'payment_capture' => 1,
+          'notes' => [
+    'name' => $firstName,
+    'mobile_num' => $data['mobile'],
+    'puja' =>  $data['pooja_name'],
+    'link' =>  $pooja_link,
+     'gotra' =>  $firstGotra,
+  ]
     ];
     
     $razorpayOrder = $api->order->create($orderData);
